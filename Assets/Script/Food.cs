@@ -4,8 +4,8 @@ public class Food : MonoBehaviour
 {
     [Header("Spawn Settings")]
     public GameObject foodPrefab; 
-    public Vector3 spawnAreaMin = new Vector3(-9, 0, -9);
-    public Vector3 spawnAreaMax = new Vector3(9, 0, 9);
+    public Vector3 spawnAreaMin = new Vector3(-20, 0, -20);
+    public Vector3 spawnAreaMax = new Vector3(20, 0, 20);
     public Transform ground;  // drag your Ground object here
 
     private float foodHeight;
