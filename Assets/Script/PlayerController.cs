@@ -1,38 +1,102 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Controller : MonoBehaviour
 {
-    public float moveSpeed = 5f;       // Forward movement speed
-    public float rotationSpeed = 200f; // Speed of rotation
+    public float moveSpeed = 5f;
+    public float rotationSpeed = 500f;
+    public LayerMask wallLayer;
 
-    private int turnDirection = 0;     // -1 = left, 1 = right
     private Quaternion targetRotation;
+    private bool isTurning = false;
+    public GameObject gameOverUI;
+    private bool isGameOver = false;
+
+    void GameOver()
+    {
+        if (isGameOver) return;
+
+        isGameOver = true;
+        moveSpeed = 0;  // stop movement
+        rotationSpeed = 0;
+
+        gameOverUI.SetActive(true);
+        Debug.Log("Game Over! UI Activated");
+    }
 
     void Start()
     {
-        targetRotation = transform.rotation; // initial rotation
+        targetRotation = transform.rotation;
     }
 
     void Update()
     {
-        // Check input for turning
+        HandleTurnInput();
+        SmoothRotate();
+
+        Debug.DrawRay(transform.position, transform.forward * 1.5f, Color.red);
+
+        if (!IsWallAhead())
+        {
+            MoveForward();
+        }
+        else
+        {
+            GameOver();
+        }
+    }
+
+    void HandleTurnInput()
+    {
+        if (isTurning) return;
+
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            turnDirection = -1;
             targetRotation = Quaternion.Euler(0, transform.eulerAngles.y - 90f, 0);
+            isTurning = true;
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            turnDirection = 1;
             targetRotation = Quaternion.Euler(0, transform.eulerAngles.y + 90f, 0);
+            isTurning = true;
         }
+    }
 
-        // Smoothly rotate
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+    void SmoothRotate()
+    {
+        if (!isTurning) return;
 
-        // Move forward constantly
+        transform.rotation = Quaternion.RotateTowards(
+            transform.rotation,
+            targetRotation,
+            rotationSpeed * Time.deltaTime
+        );
+
+        if (Quaternion.Angle(transform.rotation, targetRotation) < 0.1f)
+        {
+            transform.rotation = targetRotation;
+            isTurning = false;
+        }
+    }
+
+    void MoveForward()
+    {
         transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+    }
+
+    bool IsWallAhead()
+    {
+        return Physics.Raycast(
+            transform.position,
+            transform.forward,
+            1.5f,
+            wallLayer
+        );
+    }
+
+    void GameOver()
+    {
+        Debug.Log("🐍💥 Game Over!");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
