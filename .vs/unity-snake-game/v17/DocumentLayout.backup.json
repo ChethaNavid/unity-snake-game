@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "D:\\CADT_course\\Year 3\\GameDevelopment\\unity-snake-game\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\CADT_course\\Year 3\\GameDevelopment\\unity-snake-game\\Temp\\Preprocessed-Standard.shader||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Temp\\Preprocessed-Standard.shader||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\CADT_course\\Year 3\\GameDevelopment\\unity-snake-game\\Assets\\Dynamic Grass FX\\Shaders\\Grass.shader||{3B902123-F8A7-4915-9F01-361F908088D0}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Dynamic Grass FX\\Shaders\\Grass.shader||{3B902123-F8A7-4915-9F01-361F908088D0}"
     }
@@ -19,12 +23,25 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Preprocessed-Standard.shader",
+              "DocumentMoniker": "D:\\CADT_course\\Year 3\\GameDevelopment\\unity-snake-game\\Temp\\Preprocessed-Standard.shader",
+              "RelativeDocumentMoniker": "Temp\\Preprocessed-Standard.shader",
+              "ToolTip": "D:\\CADT_course\\Year 3\\GameDevelopment\\unity-snake-game\\Temp\\Preprocessed-Standard.shader",
+              "RelativeToolTip": "Temp\\Preprocessed-Standard.shader",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-10-26T04:04:00.35Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "Grass.shader",
               "DocumentMoniker": "D:\\CADT_course\\Year 3\\GameDevelopment\\unity-snake-game\\Assets\\Dynamic Grass FX\\Shaders\\Grass.shader",
               "RelativeDocumentMoniker": "Assets\\Dynamic Grass FX\\Shaders\\Grass.shader",
               "ToolTip": "D:\\CADT_course\\Year 3\\GameDevelopment\\unity-snake-game\\Assets\\Dynamic Grass FX\\Shaders\\Grass.shader",
               "RelativeToolTip": "Assets\\Dynamic Grass FX\\Shaders\\Grass.shader",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
               "WhenOpened": "2025-10-26T03:17:07.645Z",
               "EditorCaption": ""

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Controller : MonoBehaviour
 {
@@ -6,7 +7,9 @@ public class Controller : MonoBehaviour
     public float rotationSpeed = 500f;
     private Quaternion targetRotation;
     private bool isTurning = false;
-    private bool isDead = false;
+    private bool isGameOver = false;
+
+    public GameObject gameOverUI;
 
     void Start()
     {
@@ -15,7 +18,7 @@ public class Controller : MonoBehaviour
 
     void Update()
     {
-        if (isDead) return; // Stop everything when dead
+        if (isGameOver) return;
 
         HandleTurnInput();
         SmoothRotate();
@@ -26,17 +29,54 @@ public class Controller : MonoBehaviour
     {
         if (isTurning) return;
 
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        Vector3 dir = transform.forward;
+
+        // Moving Right
+        if (dir == Vector3.right)
         {
-            targetRotation = Quaternion.Euler(0, transform.eulerAngles.y - 90f, 0);
-            isTurning = true;
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+                TurnLeft();
+            else if (Input.GetKeyDown(KeyCode.DownArrow))
+                TurnRight();
         }
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        // Moving Left
+        else if (dir == Vector3.left)
         {
-            targetRotation = Quaternion.Euler(0, transform.eulerAngles.y + 90f, 0);
-            isTurning = true;
+            if (Input.GetKeyDown(KeyCode.DownArrow))
+                TurnLeft();
+            else if (Input.GetKeyDown(KeyCode.UpArrow))
+                TurnRight();
+        }
+        // Moving Up
+        else if (dir == Vector3.forward)
+        {
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
+                TurnLeft();
+            else if (Input.GetKeyDown(KeyCode.RightArrow))
+                TurnRight();
+        }
+        // Moving Down
+        else if (dir == Vector3.back)
+        {
+            if (Input.GetKeyDown(KeyCode.RightArrow))
+                TurnLeft();
+            else if (Input.GetKeyDown(KeyCode.LeftArrow))
+                TurnRight();
         }
     }
+
+    void TurnLeft()
+    {
+        targetRotation = Quaternion.Euler(0, transform.eulerAngles.y - 90f, 0);
+        isTurning = true;
+    }
+
+    void TurnRight()
+    {
+        targetRotation = Quaternion.Euler(0, transform.eulerAngles.y + 90f, 0);
+        isTurning = true;
+    }
+
 
     void SmoothRotate()
     {
@@ -64,9 +104,34 @@ public class Controller : MonoBehaviour
     {
         if (other.CompareTag("Wall"))
         {
-            Debug.Log("🐍💥 Game Over!");
-            SnakeGameUI.Instance.ShowGameOver();
-            isDead = true;
+            GameOver();
         }
+    }
+
+    void GameOver()
+    {
+        if (isGameOver) return;
+
+        isGameOver = true;
+        moveSpeed = 0;
+        rotationSpeed = 0;
+
+        if (gameOverUI != null)
+            gameOverUI.SetActive(true);
+
+        Debug.Log("🐍💥 Game Over UI Active!");
+    }
+
+    // These can be called from your UI buttons
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Debug.Log("Restart Game");
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+        Debug.Log("Quit Game");
     }
 }
