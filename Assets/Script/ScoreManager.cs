@@ -6,21 +6,36 @@ using TMPro;
 
 public class ScoreManager : MonoBehaviour
 {
-    public static int score = 0;
-    public TextMeshProUGUI scoreText;
+    public static ScoreManager Instance;  // Singleton reference
 
-    void Start()
+    public TextMeshProUGUI scoreText;     // Assign in Inspector
+    private int score = 0;
+
+    private void Awake()
+    {
+        // Make sure only one ScoreManager exists
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void Start()
     {
         UpdateScoreText();
     }
 
-    public static void AddScore(int amount)
+    public void AddScore(int value)
     {
-        score += amount;
-        Debug.Log("Score: " + score);
+        score += value;
+        UpdateScoreText();
     }
 
-    public void UpdateScoreText()
+    private void UpdateScoreText()
     {
         if (scoreText != null)
             scoreText.text = "Score: " + score;
