@@ -1,28 +1,12 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Controller : MonoBehaviour
 {
     public float moveSpeed = 5f;
     public float rotationSpeed = 500f;
-    public LayerMask wallLayer;
-
     private Quaternion targetRotation;
     private bool isTurning = false;
-    public GameObject gameOverUI;
-    private bool isGameOver = false;
-
-    void GameOver()
-    {
-        if (isGameOver) return;
-
-        isGameOver = true;
-        moveSpeed = 0;  // stop movement
-        rotationSpeed = 0;
-
-        gameOverUI.SetActive(true);
-        Debug.Log("Game Over! UI Activated");
-    }
+    private bool isDead = false;
 
     void Start()
     {
@@ -31,19 +15,11 @@ public class Controller : MonoBehaviour
 
     void Update()
     {
+        if (isDead) return; // Stop everything when dead
+
         HandleTurnInput();
         SmoothRotate();
-
-        Debug.DrawRay(transform.position, transform.forward * 1.5f, Color.red);
-
-        if (!IsWallAhead())
-        {
-            MoveForward();
-        }
-        else
-        {
-            GameOver();
-        }
+        MoveForward();
     }
 
     void HandleTurnInput()
@@ -84,19 +60,13 @@ public class Controller : MonoBehaviour
         transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
     }
 
-    bool IsWallAhead()
+    private void OnTriggerEnter(Collider other)
     {
-        return Physics.Raycast(
-            transform.position,
-            transform.forward,
-            1.5f,
-            wallLayer
-        );
-    }
-
-    void GameOver()
-    {
-        Debug.Log("🐍💥 Game Over!");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        if (other.CompareTag("Wall"))
+        {
+            Debug.Log("🐍💥 Game Over!");
+            SnakeGameUI.Instance.ShowGameOver();
+            isDead = true;
+        }
     }
 }
